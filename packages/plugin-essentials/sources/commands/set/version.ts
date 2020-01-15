@@ -72,6 +72,10 @@ export default class SetVersionCommand extends BaseCommand {
         bundleUrl = `https://nightly.yarnpkg.com/latest.js`;
         bundleVersion = `classic`;
         candidates = [bundleVersion];
+      } else if (semver.gte(this.range, `2.0.0-0`)) {
+        bundleUrl = `https://github.com/yarnpkg/berry/raw/%40yarnpkg/cli/${this.range}/packages/yarnpkg-cli/bin/yarn.js`;
+        bundleVersion = this.range;
+        candidates = [bundleVersion];
       } else if (semver.valid(this.range)) {
         const {releases} = await fetchReleases(configuration, {
           includePrereleases: true,
