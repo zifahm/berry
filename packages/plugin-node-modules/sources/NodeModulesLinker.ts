@@ -616,5 +616,10 @@ async function persistNodeModules(preinstallState: NodeModulesLocatorMap | null,
 
   await xfs.mkdirpPromise(rootNmDirPath);
   await writeInstallState(project, installState);
+
+  if (addList.length === 0) {
+    // Edge case - zero packages to install, - notify progress indicator to let it finish
+    progress.tick();
+  }
 };
 
